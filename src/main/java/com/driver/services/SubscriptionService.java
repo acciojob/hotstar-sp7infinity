@@ -69,7 +69,7 @@ public class SubscriptionService {
         //update the subscription in the repository
         Subscription subscription = getSubscriptionDetailsByUserId(userId);
         if(subscription == null)
-            return 0;
+            throw new Exception("User does not exist");
         int diffAmount = 0;
 
         if(subscription.getSubscriptionType() == SubscriptionType.ELITE) {

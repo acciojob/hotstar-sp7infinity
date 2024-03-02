@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class SubscriptionService {
 
-    //@Autowired
+    @Autowired
     SubscriptionRepository subscriptionRepository;
 
     @Autowired

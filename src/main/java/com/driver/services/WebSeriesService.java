@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class WebSeriesService {
@@ -41,6 +42,10 @@ public class WebSeriesService {
 
         WebSeries newWebSeries = new WebSeries(webSeriesEntryDto.getSeriesName(), webSeriesEntryDto.getAgeLimit(), webSeriesEntryDto.getRating(), webSeriesEntryDto.getSubscriptionType());
         newWebSeries.setProductionHouse(productionHouse);
+
+        List<WebSeries> curWebSeriesList = productionHouse.getWebSeriesList();
+        curWebSeriesList.add(newWebSeries);
+        productionHouse.setWebSeriesList(curWebSeriesList);
 
         productionHouseRepository.save(productionHouse);
         WebSeries savedWebSeries = webSeriesRepository.save(newWebSeries);

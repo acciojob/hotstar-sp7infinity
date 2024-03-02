@@ -43,14 +43,12 @@ public class SubscriptionService {
             subscriptionFees = 1000 + (350 * noOfScreens);
         }
 
-        //Subscription subscription = new Subscription(subscriptionType, noOfScreens, new Date(), subscriptionFees);
-        Subscription subscription = new Subscription();
-        subscription.setSubscriptionType(subscriptionType);
-        subscription.setNoOfScreensSubscribed(noOfScreens);
-        subscription.setStartSubscriptionDate(new Date());
-        subscription.setTotalAmountPaid(subscriptionFees);
-        subscription.setUser(user);
+        Subscription subscription = new Subscription(subscriptionType, noOfScreens, new Date(), subscriptionFees);
 
+        subscription.setUser(user);
+        user.setSubscription(subscription);
+
+        userRepository.save(user);
         Subscription savedSubscription = subscriptionRepository.save(subscription);
         return savedSubscription.getTotalAmountPaid();
     }

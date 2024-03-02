@@ -18,8 +18,8 @@ public class WebSeriesService {
     @Autowired
     ProductionHouseRepository productionHouseRepository;
 
-    @Autowired
-    ProductionHouseService productionHouseService;
+    //@Autowired
+    ProductionHouseService productionHouseService = new ProductionHouseService();
 
     public Integer addWebSeries(WebSeriesEntryDto webSeriesEntryDto)throws  Exception{
 

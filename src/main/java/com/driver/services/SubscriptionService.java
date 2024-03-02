@@ -17,14 +17,14 @@ import java.util.Optional;
 @Service
 public class SubscriptionService {
 
-    @Autowired
+    //@Autowired
     SubscriptionRepository subscriptionRepository;
 
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    UserService userService;
+    //@Autowired
+    UserService userService = new UserService();
 
     public Integer buySubscription(SubscriptionEntryDto subscriptionEntryDto){
 

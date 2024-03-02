@@ -49,8 +49,7 @@ public class SubscriptionService {
         user.setSubscription(subscription);
 
         userRepository.save(user);
-        Subscription savedSubscription = subscriptionRepository.save(subscription);
-        return savedSubscription.getTotalAmountPaid();
+        return subscriptionFees;
     }
 
     public Subscription getSubscriptionDetailsByUserId(Integer userId) {

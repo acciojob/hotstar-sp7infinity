@@ -52,16 +52,6 @@ public class SubscriptionService {
         return subscriptionFees;
     }
 
-    public Subscription getSubscriptionDetailsByUserId(Integer userId) {
-        //User user = userService.getUser(userId);
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if(optionalUser.isEmpty())
-            return null;
-        User user = optionalUser.get();
-        Optional<Subscription> optionalSubscription = subscriptionRepository.findByUser(user);
-        return optionalSubscription.orElse(null);
-    }
-
     public Integer upgradeSubscription(Integer userId)throws Exception{
 
         //If you are already at an ElITE subscription : then throw Exception ("Already the best Subscription")

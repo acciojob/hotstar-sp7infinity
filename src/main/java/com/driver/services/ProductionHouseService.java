@@ -21,9 +21,4 @@ public class ProductionHouseService {
         return savedProductionHouse.getId();
     }
 
-    public ProductionHouse getProductionHouse(Integer id) {
-        Optional<ProductionHouse> productionHouse = productionHouseRepository.findById(id);
-        return productionHouse.orElse(null);
-    }
-
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/webseries")
 public class WebseriesController {
 
-    //@Autowired
-    WebSeriesService webSeriesService = new WebSeriesService();
+    @Autowired
+    WebSeriesService webSeriesService;
 
     @PostMapping("/add")
     public int addWebSeries(WebSeriesEntryDto webSeriesEntryDto){

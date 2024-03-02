@@ -9,6 +9,8 @@ import com.driver.repository.WebSeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class WebSeriesService {
 
@@ -17,9 +19,6 @@ public class WebSeriesService {
 
     @Autowired
     ProductionHouseRepository productionHouseRepository;
-
-    //@Autowired
-    ProductionHouseService productionHouseService = new ProductionHouseService();
 
     public Integer addWebSeries(WebSeriesEntryDto webSeriesEntryDto)throws  Exception{
 
@@ -31,7 +30,11 @@ public class WebSeriesService {
         if(webSeries != null)
             throw new Exception("Series is already present");
 
-        ProductionHouse productionHouse = productionHouseService.getProductionHouse(webSeriesEntryDto.getProductionHouseId());
+        //ProductionHouse productionHouse = productionHouseService.getProductionHouse(webSeriesEntryDto.getProductionHouseId());
+        Optional<ProductionHouse> optionalProductionHouse = productionHouseRepository.findById(webSeriesEntryDto.getProductionHouseId());
+        if(optionalProductionHouse.isEmpty())
+            return -1;
+        ProductionHouse productionHouse = optionalProductionHouse.get();
         int webSeriesCount = webSeriesRepository.getWebSeriesCount(productionHouse);
         double newRating = ((productionHouse.getRatings() * webSeriesCount) + webSeriesEntryDto.getRating()) / ((double) (webSeriesCount + 1));
         productionHouse.setRatings(newRating);
@@ -42,9 +45,5 @@ public class WebSeriesService {
         productionHouseRepository.save(productionHouse);
         WebSeries savedWebSeries = webSeriesRepository.save(newWebSeries);
         return savedWebSeries.getId();
-    }
-
-    public Integer getViewableWebSeriesCount(SubscriptionType subsType, Integer ageLim) {
-        return webSeriesRepository.getViewableWebSeriesCount(subsType, ageLim);
     }
 }

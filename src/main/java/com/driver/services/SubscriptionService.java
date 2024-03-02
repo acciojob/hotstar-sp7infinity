@@ -23,15 +23,14 @@ public class SubscriptionService {
     @Autowired
     UserRepository userRepository;
 
-    //@Autowired
-    UserService userService = new UserService();
-
     public Integer buySubscription(SubscriptionEntryDto subscriptionEntryDto){
 
         //Save The subscription Object into the Db and return the total Amount that user has to pay
-        User user = userService.getUser(subscriptionEntryDto.getUserId());
-        if(user == null)
+        //User user = userService.getUser(subscriptionEntryDto.getUserId());
+        Optional<User> optionalUser = userRepository.findById(subscriptionEntryDto.getUserId());
+        if(optionalUser.isEmpty())
             return 0;
+        User user = optionalUser.get();
         int subscriptionFees = 0, noOfScreens = subscriptionEntryDto.getNoOfScreensRequired();
         SubscriptionType subscriptionType = subscriptionEntryDto.getSubscriptionType();
 
@@ -52,7 +51,11 @@ public class SubscriptionService {
     }
 
     public Subscription getSubscriptionDetailsByUserId(Integer userId) {
-        User user = userService.getUser(userId);
+        //User user = userService.getUser(userId);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isEmpty())
+            return null;
+        User user = optionalUser.get();
         Optional<Subscription> optionalSubscription = subscriptionRepository.findByUser(user);
         return optionalSubscription.orElse(null);
     }

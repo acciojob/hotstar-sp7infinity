@@ -29,6 +29,9 @@ public class SubscriptionService {
     public Integer buySubscription(SubscriptionEntryDto subscriptionEntryDto){
 
         //Save The subscription Object into the Db and return the total Amount that user has to pay
+        User user = userService.getUser(subscriptionEntryDto.getUserId());
+        if(user == null)
+            return 0;
         int subscriptionFees = 0, noOfScreens = subscriptionEntryDto.getNoOfScreensRequired();
         SubscriptionType subscriptionType = subscriptionEntryDto.getSubscriptionType();
 
@@ -41,7 +44,7 @@ public class SubscriptionService {
         }
 
         Subscription subscription = new Subscription(subscriptionType, noOfScreens, new Date(), subscriptionFees);
-        User user = userService.getUser(subscriptionEntryDto.getUserId());
+
         subscription.setUser(user);
 
         Subscription savedSubscription = subscriptionRepository.save(subscription);

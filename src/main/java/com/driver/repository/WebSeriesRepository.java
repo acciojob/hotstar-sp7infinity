@@ -12,8 +12,8 @@ public interface WebSeriesRepository extends JpaRepository<WebSeries,Integer> {
     WebSeries findBySeriesName(String seriesName);
 
     @Query("select count(w) from WebSeries w where w.productionHouse = :prodHouse")
-    int getWebSeriesCount(@Param("prodHouse") ProductionHouse prodHouse);
+    Integer getWebSeriesCount(@Param("prodHouse") ProductionHouse prodHouse);
 
     @Query("select count(w) from WebSeries w where w.subscriptionType <= :subsType and w.ageLimit <= :ageLim")
-    int getViewableWebSeriesCount(@Param("subsType") SubscriptionType subsType, @Param("ageLim") Integer ageLim);
+    Integer getViewableWebSeriesCount(@Param("subsType") SubscriptionType subsType, @Param("ageLim") Integer ageLim);
 }

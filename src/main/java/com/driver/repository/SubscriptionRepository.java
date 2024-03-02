@@ -11,5 +11,5 @@ public interface SubscriptionRepository extends JpaRepository<Subscription,Integ
     Optional<Subscription> findByUser(User user);
 
     @Query("select sum(s.totalAmountPaid) from Subscription s")
-    int getTotalRevenue();
+    Integer getTotalRevenue();
 }

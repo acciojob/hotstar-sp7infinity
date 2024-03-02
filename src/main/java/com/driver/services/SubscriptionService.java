@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -92,7 +93,8 @@ public class SubscriptionService {
         //We need to find out total Revenue of hotstar : from all the subscriptions combined
         //Hint is to use findAll function from the SubscriptionDb
 
-        return subscriptionRepository.getTotalRevenue();
+        Integer totalRevenue = subscriptionRepository.getTotalRevenue();
+        return Objects.requireNonNullElse(totalRevenue, 0);
     }
 
 }

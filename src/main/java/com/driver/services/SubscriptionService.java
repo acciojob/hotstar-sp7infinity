@@ -75,28 +75,22 @@ public class SubscriptionService {
         if(optionalUser.isEmpty())
             throw new Exception("User does not exist");
         User user = optionalUser.get();
-        Optional<Subscription> optionalSubscription = subscriptionRepository.findByUser(user);
-        if(optionalSubscription.isEmpty())
-            throw new Exception("Subscription does not exist");
-
-        Subscription subscription = optionalSubscription.get();
-        int diffAmount = 0;
+        Subscription subscription = user.getSubscription();
+        int diffAmount = 0, newAmount = 0;
+        int curAmount = subscription.getTotalAmountPaid();
 
         if(subscription.getSubscriptionType() == SubscriptionType.ELITE) {
             throw new Exception("Already the best Subscription");
         } else if(subscription.getSubscriptionType() == SubscriptionType.PRO) {
-            int curAmount = subscription.getTotalAmountPaid();
-            int newAmount = 1000 + (350 * subscription.getNoOfScreensSubscribed());
-            diffAmount = newAmount - curAmount;
+            newAmount = 1000 + (350 * subscription.getNoOfScreensSubscribed());
             subscription.setSubscriptionType(SubscriptionType.ELITE);
-            subscription.setTotalAmountPaid(newAmount);
         } else {
-            int curAmount = subscription.getTotalAmountPaid();
-            int newAmount = 800 + (250 * subscription.getNoOfScreensSubscribed());
-            diffAmount = newAmount - curAmount;
+            newAmount = 800 + (250 * subscription.getNoOfScreensSubscribed());
             subscription.setSubscriptionType(SubscriptionType.PRO);
-            subscription.setTotalAmountPaid(newAmount);
         }
+        diffAmount = newAmount - curAmount;
+        subscription.setTotalAmountPaid(newAmount);
+
         subscriptionRepository.save(subscription);
         return diffAmount;
     }

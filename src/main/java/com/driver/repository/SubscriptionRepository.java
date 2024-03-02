@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription,Integer> {
-    Optional<Subscription> findByUser(User user);
 
     @Query("select sum(s.totalAmountPaid) from Subscription s")
     Integer getTotalRevenue();

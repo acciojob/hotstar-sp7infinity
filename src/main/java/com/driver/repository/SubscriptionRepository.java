@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription,Integer> {
 
-    @Query("select sum(s.totalAmountPaid) from Subscription s")
-    Integer getTotalRevenue();
 }

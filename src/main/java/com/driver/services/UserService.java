@@ -40,7 +40,19 @@ public class UserService {
         if(optionalUser.isEmpty())
             return 0;
         User user = optionalUser.get();
-        return webSeriesRepository.getViewableWebSeriesCount(user.getSubscription().getSubscriptionType(), user.getAge());
+        //return webSeriesRepository.getViewableWebSeriesCount(user.getSubscription().getSubscriptionType(), user.getAge());
+
+        List<WebSeries> webSeries = webSeriesRepository.findAll();
+        int webSeriesCount = 0;
+
+        for(WebSeries ws: webSeries) {
+            if((ws.getSubscriptionType().ordinal() <= user.getSubscription().getSubscriptionType().ordinal())
+                && (ws.getAgeLimit() <= user.getAge())
+            )
+                webSeriesCount++;
+        }
+
+        return webSeriesCount;
     }
 
 
